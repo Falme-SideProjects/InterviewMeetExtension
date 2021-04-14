@@ -22,7 +22,7 @@ function OnNumberWindowsChanged()
 
     for(var a=0; a<windowsElements.length; a++)
     {
-        parent.innerHTML+="<button interviewmeet='btn-pin' onclick='alert(\"Alerted\")'>AAAAA</button>";
+        parent.innerHTML+="<button interviewmeet='btn-pin' onclick='javascript:alert(\"Alerted\")'>AAAAA</button>";
     }*/
 }
 
@@ -37,6 +37,7 @@ function RefreshWindowsFixedUI()
             document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.height = "100%";
             document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.left = positionsForTwoPins[a];
             document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.top = "0";
+            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.opacity = "1";
         } else {
             document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.display="none";
         }

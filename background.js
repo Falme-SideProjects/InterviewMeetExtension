@@ -9,14 +9,6 @@ function CallListOfParticipants()
         chrome.tabs.sendMessage(tabs[0].id, {action: "request_users"}, function(response) {
             
             CreateListOfParticipants(response.farewell);
-
-            /*var mesRes = "";
-            for(var a=0; a<response.farewell.length; a++)
-            {
-                mesRes+= response.farewell[a]+",";
-            }
-            
-            alert(mesRes);*/
         });  
     });
 }
@@ -33,9 +25,6 @@ function CreateMainOption()
           title: "List Users",
           contexts: ["browser_action"],
           id:"loadPeople"
-          /*onclick: function() {
-            CallListOfParticipants();
-        }*/
     });
 }
 
@@ -80,16 +69,6 @@ function ActionOnUser(user)
 
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
         chrome.tabs.sendMessage(tabs[0].id, {action: "fix_user", id:user}, function(response) {
-            
-            //CreateListOfParticipants(response.farewell);
-
-            /*var mesRes = "";
-            for(var a=0; a<response.farewell.length; a++)
-            {
-                mesRes+= response.farewell[a]+",";
-            }
-            
-            alert(mesRes);*/
         });  
     });
 }

@@ -17,13 +17,6 @@ function OnNumberWindowsChanged()
 {
     windowsLength = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]').length;
     windowsElements = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]');
-
-    /*var parent = windowsElements[0].parentElement;
-
-    for(var a=0; a<windowsElements.length; a++)
-    {
-        parent.innerHTML+="<button interviewmeet='btn-pin' onclick='javascript:alert(\"Alerted\")'>AAAAA</button>";
-    }*/
 }
 
 function RefreshWindowsFixedUI()
@@ -39,6 +32,7 @@ function RefreshWindowsFixedUI()
             document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.left = positionsForTwoPins[a];
             document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.top = "0";
             document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.opacity = "1";
+            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.display="block";
         } else {
             document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.display="none";
         }

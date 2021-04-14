@@ -52,4 +52,16 @@ function Update()
     RefreshWindowsFixedUI();
 }
 
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    console.log(message);
+    var responseArray = new Array();
+    for(var a=0; a<windowsElements.length; a++)
+    {
+        responseArray[a] = windowsElements[a].querySelectorAll('[jscontroller="GQnsGd"]')[0].innerHTML;
+        //[jscontroller="GQnsGd"]
+    }
+    sendResponse({farewell:responseArray});
+    return true
+});
+
 window.setInterval(Update, 1000);

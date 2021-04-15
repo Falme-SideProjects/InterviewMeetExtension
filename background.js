@@ -26,6 +26,11 @@ function CreateMainOption()
           contexts: ["browser_action"],
           id:"loadPeople"
     });
+    chrome.contextMenus.create({
+          title: "Unpin All",
+          contexts: ["browser_action"],
+          id:"unpinAll"
+    });
 }
 
 function CreateListOfParticipants(list)
@@ -52,6 +57,11 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     if (info.menuItemId == "loadPeople") {
         CallListOfParticipants();
     }
+
+    if(info.menuItemId == "unpinAll")
+    {
+        UnpinAllUsers();
+    }
     
     if(info.menuItemId.includes('person'))
     {
@@ -69,6 +79,14 @@ function ActionOnUser(user)
 
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
         chrome.tabs.sendMessage(tabs[0].id, {action: "fix_user", id:user}, function(response) {
+        });  
+    });
+}
+
+function UnpinAllUsers()
+{
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+        chrome.tabs.sendMessage(tabs[0].id, {action: "unpin_user"}, function(response) {
         });  
     });
 }

@@ -39,6 +39,14 @@ function RefreshWindowsFixedUI()
     }
 }
 
+function RefreshWindowsUI()
+{
+    for(var a=0; a<windowsElements.length; a++)
+        document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.display="block";
+    
+    window.dispatchEvent(new Event('resize'));
+}
+
 function FixUserById(id)
 {
     for(var a=0; a<windowsElements.length; a++)
@@ -80,6 +88,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     {
         if(listOfCalledElementsToPin.length == 2) listOfCalledElementsToPin = new Array();
         listOfCalledElementsToPin.push(message.id);
+    }
+    else if(message.action == "unpin_user")
+    {
+        listOfCalledElementsToPin = new Array();
+        RefreshWindowsUI();
     }
     return true
 });

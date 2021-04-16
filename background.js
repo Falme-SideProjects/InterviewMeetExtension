@@ -75,8 +75,6 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
 
 function ActionOnUser(user)
 {
-    alert(lastListOfUsers[user]);
-
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
         chrome.tabs.sendMessage(tabs[0].id, {action: "fix_user", id:user}, function(response) {
         });  

@@ -135,3 +135,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 window.setInterval(Update, 100);
 Init();
+
+
+//var listenerAleatorio = getEventListeners(document.getElementsByTagName("body")[0]).mouseout[0].listener
+//document.getElementsByTagName("body")[0].removeEventListener('mouseout', listenerAleatorio)

@@ -1,5 +1,7 @@
 var lastListOfUsers = new Array();
 
+var numberSelected = 0;
+
 CreateMainOption();
 
 function CallListOfParticipants()
@@ -69,12 +71,17 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
         var intNumberID = Number.parseInt(numberID, 16);
         
         //alert(lastListOfUsers[intNumberID]);
-        ActionOnUser(intNumberID);
+        ActionOnUser(intNumberID, info, tab);
     }
 });
 
-function ActionOnUser(user)
+function ActionOnUser(user, info, tab)
 {
+    
+    CheckIfNeedToEnableAllOptions();
+
+    chrome.contextMenus.update(info.menuItemId, {enabled: false});
+
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
         chrome.tabs.sendMessage(tabs[0].id, {action: "fix_user", id:user}, function(response) {
         });  
@@ -83,8 +90,21 @@ function ActionOnUser(user)
 
 function UnpinAllUsers()
 {
+    numberSelected=2;
+    CheckIfNeedToEnableAllOptions();
+
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
         chrome.tabs.sendMessage(tabs[0].id, {action: "unpin_user"}, function(response) {
         });  
     });
+}
+
+function CheckIfNeedToEnableAllOptions()
+{
+    numberSelected++;
+    if(numberSelected>=2)
+    {
+        CallListOfParticipants();
+        numberSelected=0;
+    }
 }

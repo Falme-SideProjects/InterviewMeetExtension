@@ -5,8 +5,6 @@ var elementWindowID = "J3CtX";
 var elementPinID = "VXdfxd";
 var contentCameraClass = "p2hjYe";
 
-var positionsForTwoPins = ["realocateWindowLeft", "realocateWindowRight"];
-
 var listOfCalledElementsToPin = new Array();
 
 function ReturnTwentyFour()
@@ -17,14 +15,20 @@ function ReturnTwentyFour()
 function Init()
 {
     document.styleSheets[0].insertRule(".realocateCamera {width: 100% !important; height: 100% !important; top: 0px !important; }",0);
-    document.styleSheets[0].insertRule(".realocateWindowLeft {left: 0% !important; top: 0px !important;}",0);
-    document.styleSheets[0].insertRule(".realocateWindowRight {left: 50% !important; }",0);
+    document.styleSheets[0].insertRule(".realocateWindow {left: 0% !important; top: 0px !important; float: left; position: relative !important; }",0);
+    document.styleSheets[0].insertRule(".BodyInterview .xsj2Ff {left: 0% !important; top: 0px !important; float: left; position: relative !important; }", 0);
+    document.styleSheets[0].insertRule(".BodyInterview .p2hjYe.TPpRNe {left: 0px !important; }", 0);
 }
+
 
 function OnNumberWindowsChanged()
 {
     windowsLength = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]').length;
     windowsElements = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]');
+}
+
+function RemoveEvents()
+{
 }
 
 function RefreshWindowsFixedUI()
@@ -35,13 +39,14 @@ function RefreshWindowsFixedUI()
     {
         if(a==listOfCalledElementsToPin[0] || a==listOfCalledElementsToPin[1])
         {
+
             document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.width = "50%";
             document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.height = "100%";
             document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.top = "0";
             document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.opacity = "1";
             document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.display="block";
 
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].classList.add(positionsForTwoPins[b]);
+            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].classList.add("realocateWindow");
             document.querySelectorAll('[jscontroller="'+elementWindowID+'"] .'+contentCameraClass)[a].classList.add("realocateCamera");
             document.querySelectorAll('[jscontroller="'+elementWindowID+'"] .'+contentCameraClass)[a].style.left="0px";
             
@@ -68,15 +73,13 @@ function RefreshWindowsUI()
 
 function RemoveAllClasses()
 {
-    var pinnedOne = document.querySelectorAll('.'+positionsForTwoPins[0]);
-    var pinnedTwo = document.querySelectorAll('.'+positionsForTwoPins[1]);
+    var pinned = document.querySelectorAll('.realocateWindow');
     var cameraPins = document.querySelectorAll('.realocateCamera');
 
-    for(var a=0; a<pinnedOne.length; a++)
-        pinnedOne[a].classList.remove(positionsForTwoPins[0]);
-        
-    for(var a=0; a<pinnedTwo.length; a++)
-        pinnedTwo[a].classList.remove(positionsForTwoPins[1]);
+    document.body.classList.remove("BodyInterview");
+
+    for(var a=0; a<pinned.length; a++)
+        pinned[a].classList.remove("realocateWindow");
 
     for(var a=0; a<cameraPins.length; a++)
         cameraPins[a].classList.remove("realocateCamera");
@@ -123,9 +126,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     {
         if(listOfCalledElementsToPin.length == 2) listOfCalledElementsToPin = new Array();
         listOfCalledElementsToPin.push(message.id);
+        
+        if(listOfCalledElementsToPin.length == 2)
+            document.querySelectorAll('.EIlDfe.T3F3Rd')[0].classList.add("BodyInterview");
+            
+        RemoveEvents();
     }
     else if(message.action == "unpin_user")
-    {
+    {   
         listOfCalledElementsToPin = new Array();
         RefreshWindowsUI();
         RemoveAllClasses();
@@ -133,9 +141,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true
 });
 
+
+
 window.setInterval(Update, 100);
 Init();
-
-
-//var listenerAleatorio = getEventListeners(document.getElementsByTagName("body")[0]).mouseout[0].listener
-//document.getElementsByTagName("body")[0].removeEventListener('mouseout', listenerAleatorio)

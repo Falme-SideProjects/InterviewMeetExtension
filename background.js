@@ -24,12 +24,12 @@ function CreateMainOption()
 {
     ClearList();
     chrome.contextMenus.create({
-          title: "List Users",
+          title: "Listar usuarios",
           contexts: ["browser_action"],
           id:"loadPeople"
     });
     chrome.contextMenus.create({
-          title: "Unpin All",
+          title: "Desfixar todos",
           contexts: ["browser_action"],
           id:"unpinAll"
     });
@@ -38,7 +38,7 @@ function CreateMainOption()
 function CreateListOfParticipants(list)
 {
     chrome.contextMenus.create({
-        title: "List Of People",
+        title: "Lista de pessoas",
         contexts: ["browser_action"],
         id:"parent"
     });

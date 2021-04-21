@@ -67,7 +67,7 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     
     if(info.menuItemId.includes('person'))
     {
-        var numberID = info.menuItemId[info.menuItemId.length-1];
+        var numberID = info.menuItemId.substr(6);
         var intNumberID = Number.parseInt(numberID, 16);
         
         //alert(lastListOfUsers[intNumberID]);

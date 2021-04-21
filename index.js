@@ -7,11 +7,6 @@ var contentCameraClass = "p2hjYe";
 
 var listOfCalledElementsToPin = new Array();
 
-function ReturnTwentyFour()
-{
-    return 24;
-}
-
 function Init()
 {
     document.styleSheets[0].insertRule(".realocateCamera {width: 100% !important; height: 100% !important; top: 0px !important; }",0);
@@ -25,10 +20,6 @@ function OnNumberWindowsChanged()
 {
     windowsLength = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]').length;
     windowsElements = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]');
-}
-
-function RemoveEvents()
-{
 }
 
 function RefreshWindowsFixedUI()
@@ -130,7 +121,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if(listOfCalledElementsToPin.length == 2)
             document.querySelectorAll('.EIlDfe.T3F3Rd')[0].classList.add("BodyInterview");
             
-        RemoveEvents();
     }
     else if(message.action == "unpin_user")
     {   
@@ -143,5 +133,5 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 
 
-window.setInterval(Update, 100);
+window.setInterval(Update, 1000);
 Init();

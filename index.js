@@ -7,7 +7,7 @@ var contentCameraClass = "p2hjYe";
 
 var listOfCalledElementsToPin = new Array();
 
-function Init()
+function Start()
 {
     document.styleSheets[0].insertRule(".realocateCamera {width: 100% !important; height: 100% !important; top: 0px !important; }",0);
     document.styleSheets[0].insertRule(".realocateWindow {left: 0% !important; top: 0px !important; float: left; position: relative !important; }",0);
@@ -28,23 +28,28 @@ function RefreshWindowsFixedUI()
 
     for(var a=0,b=0; a<windowsElements.length; a++)
     {
-        if(a==listOfCalledElementsToPin[0] || a==listOfCalledElementsToPin[1])
+        var outerWindowElem = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a];
+        var innerWindowElem = document.querySelectorAll('[jscontroller="'+elementWindowID+'"] .'+contentCameraClass)[a];
+
+        
+        if(a==listOfCalledElementsToPin[0].id || a==listOfCalledElementsToPin[1].id)
         {
+            CheckNameAndIndexMatch();
 
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.width = "50%";
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.height = "100%";
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.top = "0";
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.opacity = "1";
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.display="block";
+            outerWindowElem.style.width = "50%";
+            outerWindowElem.style.height = "100%";
+            outerWindowElem.style.top = "0";
+            outerWindowElem.style.opacity = "1";
+            outerWindowElem.style.display="block";
 
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].classList.add("realocateWindow");
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"] .'+contentCameraClass)[a].classList.add("realocateCamera");
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"] .'+contentCameraClass)[a].style.left="0px";
+            outerWindowElem.classList.add("realocateWindow");
+            innerWindowElem.classList.add("realocateCamera");
+            innerWindowElem.style.left="0px";
             
             b++;
         } else {
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.display="none";
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.width = "0%";
+            outerWindowElem.style.display="none";
+            outerWindowElem.style.width = "0%";
         }
     }
 }
@@ -80,15 +85,16 @@ function FixUserById(id)
 {
     for(var a=0; a<windowsElements.length; a++)
     {
+        var elem = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a];
         if(a==id)
         {
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.width = "50%";
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.height = "100%";
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.left = positionsForTwoPins[a];
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.top = "0";
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.opacity = "1";
+            elem.style.width = "50%";
+            elem.style.height = "100%";
+            elem.style.left = positionsForTwoPins[a];
+            elem.style.top = "0";
+            elem.style.opacity = "1";
         } else {
-            document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.display="none";
+            elem.style.display="none";
         }
     }
 }
@@ -116,7 +122,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     else if(message.action == "fix_user")
     {
         if(listOfCalledElementsToPin.length == 2) listOfCalledElementsToPin = new Array();
-        listOfCalledElementsToPin.push(message.id);
+        listOfCalledElementsToPin.push({id:message.id, userName:GetUserNameByIndex(message.id)});
         
         if(listOfCalledElementsToPin.length == 2)
             document.querySelectorAll('.EIlDfe.T3F3Rd')[0].classList.add("BodyInterview");
@@ -131,7 +137,46 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true
 });
 
+function GetUserNameByIndex(index)
+{
+    var elem = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[index];
+    var selfName = elem.querySelectorAll("[jscontroller='GQnsGd']")[0].innerHTML;
+    return selfName;
+}
+
+function CheckNameAndIndexMatch()
+{
+    for(var a=0; a<listOfCalledElementsToPin.length; a++)
+    {
+        if(listOfCalledElementsToPin[a].id >= document.querySelectorAll('[jscontroller="'+elementWindowID+'"]').length) listOfCalledElementsToPin[a].id = 0;
+
+        var elem = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[listOfCalledElementsToPin[a].id];
+        var selfName = elem.querySelectorAll("[jscontroller='GQnsGd']")[0].innerHTML;
+
+        if(listOfCalledElementsToPin[a].userName != selfName)
+        {
+            console.log("Name Not Matched");
+            var newId = GetUserIdByName(selfName);
+            
+            if(newId != -1) listOfCalledElementsToPin[a].id = newId;
+        }
+    }
+}
+
+function GetUserIdByName(nameUser)
+{
+    for(var a=0; a<document.querySelectorAll('[jscontroller="'+elementWindowID+'"]').length; a++)
+    {
+        var elem = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[listOfCalledElementsToPin[a].id];
+        var selfName = elem.querySelectorAll("[jscontroller='GQnsGd']")[0].innerHTML;
+
+        if(nameUser == selfName) return a;
+    }
+
+
+    return -1;
+}
 
 
 window.setInterval(Update, 1000);
-Init();
+Start();

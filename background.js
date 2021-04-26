@@ -77,13 +77,13 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
 
 function ActionOnUser(user, info, tab)
 {
-    
-    CheckIfNeedToEnableAllOptions();
-
-    chrome.contextMenus.update(info.menuItemId, {enabled: false});
-
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
         chrome.tabs.sendMessage(tabs[0].id, {action: "fix_user", id:user}, function(response) {
+            if(response.fixed)
+            {
+                CheckIfNeedToEnableAllOptions();
+                chrome.contextMenus.update(info.menuItemId, {enabled: false});
+            }
         });  
     });
 }

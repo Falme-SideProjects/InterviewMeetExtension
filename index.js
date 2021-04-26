@@ -217,21 +217,23 @@ function CheckNameAndIndexMatch()
         if(listOfCalledElementsToPin[a].userName != selfName)
         {
             console.log("Name Not Matched");
-            var newId = GetUserIdByName(selfName);
+            console.log("ID :"+listOfCalledElementsToPin[0].id+", Name : "+listOfCalledElementsToPin[0].userName);
+            console.log("ID :"+listOfCalledElementsToPin[1].id+", Name : "+listOfCalledElementsToPin[1].userName);
+            var newId = GetUserIdByName(listOfCalledElementsToPin[a]);
             
             if(newId != -1) listOfCalledElementsToPin[a].id = newId;
         }
     }
 }
 
-function GetUserIdByName(nameUser)
+function GetUserIdByName(user)
 {
     for(var a=0; a<document.querySelectorAll('[jscontroller="'+elementWindowID+'"]').length; a++)
     {
-        var elem = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[listOfCalledElementsToPin[a].id];
+        var elem = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a];
         var selfName = elem.querySelectorAll("[jscontroller='GQnsGd']")[0].innerHTML;
 
-        if(nameUser == selfName) return a;
+        if(user.userName == selfName) return a;
     }
 
 

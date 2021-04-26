@@ -24,6 +24,11 @@ function CreateMainOption()
 {
     ClearList();
     chrome.contextMenus.create({
+          title: "Ajuda/Instruções",
+          contexts: ["browser_action"],
+          id:"help"
+    });
+    chrome.contextMenus.create({
           title: "Listar usuarios",
           contexts: ["browser_action"],
           id:"loadPeople"
@@ -73,6 +78,11 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
         //alert(lastListOfUsers[intNumberID]);
         ActionOnUser(intNumberID, info, tab);
     }
+    
+    if(info.menuItemId == "help")
+    {
+        ShowHelp();
+    }
 });
 
 function ActionOnUser(user, info, tab)
@@ -107,4 +117,9 @@ function CheckIfNeedToEnableAllOptions()
         CallListOfParticipants();
         numberSelected=0;
     }
+}
+
+function ShowHelp()
+{
+    
 }

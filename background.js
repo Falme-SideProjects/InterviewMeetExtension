@@ -48,14 +48,31 @@ function CreateListOfParticipants(list)
         id:"parent"
     });
 
+    CreateAZList();
+
     lastListOfUsers = list;
     for(var a=0; a<list.length; a++)
     {
         chrome.contextMenus.create({
             title: list[a],
-            parentId: "parent",
+            parentId: "parent"+(list[a][0].toUpperCase()),
             id:("person"+a),
             contexts: ["browser_action"]
+        });
+    }
+}
+
+function CreateAZList()
+{
+    for(var a=0;a<26; a++) console.log();
+    for(var a=0;a<26; a++)
+    {
+        var letter = String.fromCharCode(65+a);
+        chrome.contextMenus.create({
+            title: ""+letter,
+            contexts: ["browser_action"],
+            id:"parent"+letter,
+            parentId: "parent"
         });
     }
 }
@@ -121,5 +138,5 @@ function CheckIfNeedToEnableAllOptions()
 
 function ShowHelp()
 {
-    
+
 }

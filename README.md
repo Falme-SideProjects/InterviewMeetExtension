@@ -1,6 +1,6 @@
 # Google Meet com Duas Pessoas Fixas
 
-Estas são as instruções da Extensão "Interview Google Meet", caso não tenha adquirido ainda a extensão, ela pode ser baixada Somente para Google Chrome neste Link.
+Estas são as instruções da Extensão ["Interview Google Meet"](), caso não tenha adquirido ainda a extensão, ela pode ser baixada Somente para Google Chrome neste [Link]().
 
 ## Como Usar?
 
@@ -31,7 +31,7 @@ Agora que todos os usuários da chamada estão listados, é preciso selecionar o
 4 - Selecione a pessoa que Procura fixar<br />
 ![image](https://user-images.githubusercontent.com/5856107/116322002-8ba6e800-a791-11eb-89c8-afdf53a0002d.png)
 
-Se nada Mudar ESTA TUDO CERTO, só vai mudar quando selecionar a segunda pessoa
+**Se nada Mudar ESTA TUDO CERTO, só vai mudar quando selecionar a segunda pessoa**
 
 ### 5 - Selecione o Segundo Usuário a Fixar
 

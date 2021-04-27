@@ -138,5 +138,7 @@ function CheckIfNeedToEnableAllOptions()
 
 function ShowHelp()
 {
-
+    chrome.tabs.create({  
+        url: "https://github.com/Falme/InterviewMeetExtension/blob/main/README.md"
+      });
 }

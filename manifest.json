@@ -3,9 +3,9 @@
     "name": "Interview Google Meet",
     "version": "0.2",
 
-    "icons": { "16": "icons/icon16.jpg",
-        "48": "icons/icon48.jpg",
-       "128": "icons/icon128.jpg" },
+    "icons": { "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+       "128": "icons/icon128.png" },
 
     "content_scripts":[
         {

@@ -64,7 +64,6 @@ function CreateListOfParticipants(list)
 
 function CreateAZList()
 {
-    for(var a=0;a<26; a++) console.log();
     for(var a=0;a<26; a++)
     {
         var letter = String.fromCharCode(65+a);

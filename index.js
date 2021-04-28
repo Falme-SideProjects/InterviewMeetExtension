@@ -1,7 +1,8 @@
 var windowsLength = 0;
 var windowsElements = new Array();
 
-var elementWindowID = "J3CtX";
+var elementWindowController = '[jscontroller="J3CtX"]';
+
 var elementPinID = "VXdfxd";
 var contentCameraClass = "p2hjYe";
 var pinElements = '[jscontroller="u36Osd"]';
@@ -35,8 +36,8 @@ function Start()
 
 function OnNumberWindowsChanged()
 {
-    windowsLength = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]').length;
-    windowsElements = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]');
+    windowsLength = document.querySelectorAll(elementWindowController).length;
+    windowsElements = document.querySelectorAll(elementWindowController);
 
     RemoveAllPins();
 }
@@ -69,8 +70,8 @@ function RefreshWindowsFixedUI()
 
     for(var a=0,b=0; a<windowsElements.length; a++)
     {
-        var outerWindowElem = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a];
-        var innerWindowElem = document.querySelectorAll('[jscontroller="'+elementWindowID+'"] .'+contentCameraClass)[a];
+        var outerWindowElem = document.querySelectorAll(elementWindowController)[a];
+        var innerWindowElem = document.querySelectorAll(elementWindowController+' .'+contentCameraClass)[a];
 
         
         if(a==listOfCalledElementsToPin[0].id || a==listOfCalledElementsToPin[1].id)
@@ -103,7 +104,7 @@ window.onresize = function()
 function RefreshWindowsUI()
 {
     for(var a=0; a<windowsElements.length; a++)
-        document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a].style.display="block";
+        document.querySelectorAll(elementWindowController)[a].style.display="block";
     
     window.dispatchEvent(new Event('resize'));
 }
@@ -126,7 +127,7 @@ function FixUserById(id)
 {
     for(var a=0; a<windowsElements.length; a++)
     {
-        var elem = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a];
+        var elem = document.querySelectorAll(elementWindowController)[a];
         if(a==id)
         {
             elem.style.width = "50%";
@@ -142,7 +143,7 @@ function FixUserById(id)
 
 function Update()
 {
-    if(windowsLength != document.querySelectorAll('[jscontroller="'+elementWindowID+'"]').length)
+    if(windowsLength != document.querySelectorAll(elementWindowController).length)
         OnNumberWindowsChanged();
 
     RefreshWindowsFixedUI();
@@ -162,7 +163,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     else if(message.action == "fix_user")
     {
-        if(document.querySelectorAll('[jscontroller="'+elementWindowID+'"]').length > 1)
+        if(document.querySelectorAll(elementWindowController).length > 1)
         {
             OnFixUser(message);
             sendResponse({fixed:true});
@@ -197,7 +198,7 @@ function OnFixUser(message)
 
 function GetUserNameByIndex(index)
 {
-    var elem = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[index];
+    var elem = document.querySelectorAll(elementWindowController)[index];
     var selfName = elem.querySelectorAll("[jscontroller='GQnsGd']")[0].innerHTML;
     return selfName;
 }
@@ -206,12 +207,12 @@ function CheckNameAndIndexMatch()
 {
     for(var a=0; a<listOfCalledElementsToPin.length; a++)
     {
-        if(listOfCalledElementsToPin[a].id >= document.querySelectorAll('[jscontroller="'+elementWindowID+'"]').length)
+        if(listOfCalledElementsToPin[a].id >= document.querySelectorAll(elementWindowController).length)
         {
             listOfCalledElementsToPin[a].id = 0;
         }
 
-        var elem = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[listOfCalledElementsToPin[a].id];
+        var elem = document.querySelectorAll(elementWindowController)[listOfCalledElementsToPin[a].id];
         var selfName = elem.querySelectorAll("[jscontroller='GQnsGd']")[0].innerHTML;
 
         if(listOfCalledElementsToPin[a].userName != selfName)
@@ -228,9 +229,9 @@ function CheckNameAndIndexMatch()
 
 function GetUserIdByName(user)
 {
-    for(var a=0; a<document.querySelectorAll('[jscontroller="'+elementWindowID+'"]').length; a++)
+    for(var a=0; a<document.querySelectorAll(elementWindowController).length; a++)
     {
-        var elem = document.querySelectorAll('[jscontroller="'+elementWindowID+'"]')[a];
+        var elem = document.querySelectorAll(elementWindowController)[a];
         var selfName = elem.querySelectorAll("[jscontroller='GQnsGd']")[0].innerHTML;
 
         if(user.userName == selfName) return a;

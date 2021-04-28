@@ -1,14 +1,21 @@
+//====================
+//  VARIABLES
+//====================
+
 var windowsLength = 0;
 var windowsElements = new Array();
-
-var elementWindowController = '[jscontroller="J3CtX"]';
-
-var elementPinID = "VXdfxd";
-var contentCameraClass = "p2hjYe";
-var pinElements = '[jscontroller="u36Osd"]';
+var listOfCalledElementsToPin = new Array();
 var canPin = true;
 
-var listOfCalledElementsToPin = new Array();
+var elementWindowController = '[jscontroller="J3CtX"]';
+var elementNameUserController = "[jscontroller='GQnsGd']";
+var pinElementsController = '[jscontroller="u36Osd"]';
+
+var contentCameraClass = "p2hjYe";
+
+//==================
+//  METHODS
+//==================
 
 function Start()
 {
@@ -46,9 +53,9 @@ function RemoveAllPins()
 {
     if(!canPin)
     {
-        for(var a=0; a<document.querySelectorAll(pinElements).length; a++)
+        for(var a=0; a<document.querySelectorAll(pinElementsController).length; a++)
         {
-            document.querySelectorAll(pinElements)[a].style.display = "none";
+            document.querySelectorAll(pinElementsController)[a].style.display = "none";
         }
     }
 }
@@ -57,9 +64,9 @@ function ShowAllPins()
 {
     if(canPin)
     {
-        for(var a=0; a<document.querySelectorAll(pinElements).length; a++)
+        for(var a=0; a<document.querySelectorAll(pinElementsController).length; a++)
         {
-            document.querySelectorAll(pinElements)[a].style.display = "block";
+            document.querySelectorAll(pinElementsController)[a].style.display = "block";
         }
     }
 }
@@ -150,14 +157,14 @@ function Update()
 }
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    console.log(message);
+    
 
     if(message.action == "request_users")
     {
         var responseArray = new Array();
         
         for(var a=0; a<windowsElements.length; a++)
-        responseArray[a] = windowsElements[a].querySelectorAll('[jscontroller="GQnsGd"]')[0].innerHTML;
+        responseArray[a] = windowsElements[a].querySelectorAll(elementNameUserController)[0].innerHTML;
         
         sendResponse({farewell:responseArray});
     }
@@ -199,7 +206,7 @@ function OnFixUser(message)
 function GetUserNameByIndex(index)
 {
     var elem = document.querySelectorAll(elementWindowController)[index];
-    var selfName = elem.querySelectorAll("[jscontroller='GQnsGd']")[0].innerHTML;
+    var selfName = elem.querySelectorAll(elementNameUserController)[0].innerHTML;
     return selfName;
 }
 
@@ -213,13 +220,10 @@ function CheckNameAndIndexMatch()
         }
 
         var elem = document.querySelectorAll(elementWindowController)[listOfCalledElementsToPin[a].id];
-        var selfName = elem.querySelectorAll("[jscontroller='GQnsGd']")[0].innerHTML;
+        var selfName = elem.querySelectorAll(elementNameUserController)[0].innerHTML;
 
         if(listOfCalledElementsToPin[a].userName != selfName)
         {
-            console.log("Name Not Matched");
-            console.log("ID :"+listOfCalledElementsToPin[0].id+", Name : "+listOfCalledElementsToPin[0].userName);
-            console.log("ID :"+listOfCalledElementsToPin[1].id+", Name : "+listOfCalledElementsToPin[1].userName);
             var newId = GetUserIdByName(listOfCalledElementsToPin[a]);
             
             if(newId != -1) listOfCalledElementsToPin[a].id = newId;
@@ -232,11 +236,10 @@ function GetUserIdByName(user)
     for(var a=0; a<document.querySelectorAll(elementWindowController).length; a++)
     {
         var elem = document.querySelectorAll(elementWindowController)[a];
-        var selfName = elem.querySelectorAll("[jscontroller='GQnsGd']")[0].innerHTML;
+        var selfName = elem.querySelectorAll(elementNameUserController)[0].innerHTML;
 
         if(user.userName == selfName) return a;
     }
-
 
     return -1;
 }

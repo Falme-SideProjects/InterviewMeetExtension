@@ -1,12 +1,30 @@
-var lastListOfUsers = new Array();
 
+//==============
+//  VARIABLES
+//==============
+
+var lastListOfUsers = new Array();
 var numberSelected = 0;
+
+const LABEL_HELP = "Ajuda/Instruções";
+const LABEL_LIST_USERS = "Listar usuarios";
+const LABEL_UNPIN_ALL = "Desfixar todos";
+const LABEL_USER_LIST = "Lista de pessoas";
+
+const ID_HELP = "help";
+const ID_LOADPEOPLE = "loadPeople";
+const ID_UNPINALL = "unpinAll";
+
+//==============
+//  FUNCTIONS
+//==============
 
 CreateMainOption();
 
 function CallListOfParticipants()
 {
     CreateMainOption();
+
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
         chrome.tabs.sendMessage(tabs[0].id, {action: "request_users"}, function(response) {
             
@@ -24,26 +42,26 @@ function CreateMainOption()
 {
     ClearList();
     chrome.contextMenus.create({
-          title: "Ajuda/Instruções",
+          title: LABEL_HELP,
           contexts: ["browser_action"],
-          id:"help"
+          id:ID_HELP
     });
     chrome.contextMenus.create({
-          title: "Listar usuarios",
+          title: LABEL_LIST_USERS,
           contexts: ["browser_action"],
-          id:"loadPeople"
+          id:ID_LOADPEOPLE
     });
     chrome.contextMenus.create({
-          title: "Desfixar todos",
+          title: LABEL_UNPIN_ALL,
           contexts: ["browser_action"],
-          id:"unpinAll"
+          id:ID_UNPINALL
     });
 }
 
 function CreateListOfParticipants(list)
 {
     chrome.contextMenus.create({
-        title: "Lista de pessoas",
+        title: LABEL_USER_LIST,
         contexts: ["browser_action"],
         id:"parent"
     });
@@ -77,25 +95,21 @@ function CreateAZList()
 }
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
-    if (info.menuItemId == "loadPeople") {
+    if (info.menuItemId == ID_LOADPEOPLE) {
         CallListOfParticipants();
     }
-
-    if(info.menuItemId == "unpinAll")
+    else if(info.menuItemId == ID_UNPINALL)
     {
         UnpinAllUsers();
     }
-    
-    if(info.menuItemId.includes('person'))
+    else if(info.menuItemId.includes('person'))
     {
         var numberID = info.menuItemId.substr(6);
         var intNumberID = Number.parseInt(numberID, 16);
         
-        //alert(lastListOfUsers[intNumberID]);
         ActionOnUser(intNumberID, info, tab);
     }
-    
-    if(info.menuItemId == "help")
+    else if(info.menuItemId == ID_HELP)
     {
         ShowHelp();
     }
@@ -125,6 +139,7 @@ function UnpinAllUsers()
     });
 }
 
+
 function CheckIfNeedToEnableAllOptions()
 {
     numberSelected++;
@@ -135,6 +150,7 @@ function CheckIfNeedToEnableAllOptions()
     }
 }
 
+// Go to Instructions
 function ShowHelp()
 {
     chrome.tabs.create({  

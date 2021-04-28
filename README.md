@@ -6,7 +6,7 @@ Estas são as instruções da Extensão ["Interview Google Meet"](), caso não t
 
 ### 1 - Fixe a Extensão na Barra Superior do Chrome
 
-Clique no Botão de Extensões do Google Chrome e após abrir uma janela, clique no Alfinete para fixar a Extensão em seu Navegador:
+Clique no Botão de Extensões do Google Chrome e após abrir uma janela, clique no Alfinete para fixar a Extensão em seu Navegador:<br />
 ![image](https://user-images.githubusercontent.com/5856107/116321335-34544800-a790-11eb-9558-afa16bb73cdf.png)
 
 ### 2 - Abra a reunião do Google Meet
@@ -44,4 +44,11 @@ Para desafixar todos os usuários, faça:
 1 - Clique com o Botão Direito no icone da extensão "Interview Google Meet"<br />
 2 - Selecione "Desfixar todos"<br />
 ![image](https://user-images.githubusercontent.com/5856107/116322254-0a038a00-a792-11eb-9303-9014852d7db6.png)
+
+
+## Em Caso de Apresentações
+
+Para selecionar a apresentação que alguém esteja compartilhando, primeiro liste todos os usuários de novo, e a apresentação irá aparecer na "Lista de Pessoas" na letra **A** > Apresentação.<br />
+![image](https://user-images.githubusercontent.com/5856107/116482272-3fc07580-a85b-11eb-860e-bcc7ab5b3e10.png)
+
 
